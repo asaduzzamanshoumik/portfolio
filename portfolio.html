@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asadujjaman Shoumik - Network Portfolio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.2/dist/vanilla-tilt.min.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: radial-gradient(circle at center, #0f172a, #0a0e1a);
+      font-family: 'Segoe UI', sans-serif;
+      overflow-x: hidden;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: url('https://www.transparenttextures.com/patterns/cubes.png');
+      opacity: 0.03;
+      z-index: -2;
+    }
+    .device {
+      cursor: pointer;
+      transition: transform 0.3s ease, filter 0.3s ease;
+      filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.4));
+    }
+    .device:hover {
+      transform: scale(1.1);
+      filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.8));
+    }
+    .modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #0f172a;
+      border: 1px solid #38bdf8;
+      color: #33ff33;
+      font-family: monospace;
+      padding: 2rem;
+      border-radius: 0.75rem;
+      z-index: 100;
+      display: none;
+      width: 90%;
+      max-width: 500px;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.3);
+    }
+    .overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      z-index: 90;
+      display: none;
+    }
+    .line {
+      stroke: #38bdf8;
+      stroke-width: 2;
+      stroke-dasharray: 5, 5;
+    }
+  </style>
+</head>
+<body>
+  <svg class="absolute top-0 left-0 w-full h-full pointer-events-none z-0" viewBox="0 0 1000 800">
+    <line x1="500" y1="100" x2="500" y2="300" class="line" />
+    <line x1="500" y1="300" x2="350" y2="500" class="line" />
+    <line x1="500" y1="300" x2="650" y2="500" class="line" />
+  </svg>
+
+  <div class="relative z-10 flex flex-col items-center justify-center min-h-screen space-y-24">
+    <div class="device" onclick="openModal('about')" data-tilt data-tilt-scale="1.05">
+      <img src="https://raw.githubusercontent.com/0xreeko/network-icons/main/router.svg" alt="Router" class="w-28 mx-auto" />
+      <p class="text-cyan-300 text-center mt-2 text-xl font-bold">Router<br><span class="text-sm font-medium">About Me</span></p>
+    </div>
+    <div class="device" onclick="openModal('skills')" data-tilt data-tilt-scale="1.05">
+      <img src="https://raw.githubusercontent.com/0xreeko/network-icons/main/switch.svg" alt="Switch" class="w-24 mx-auto" />
+      <p class="text-blue-300 text-center mt-2 text-xl font-bold">Switch<br><span class="text-sm font-medium">Skills</span></p>
+    </div>
+    <div class="flex gap-24">
+      <div class="device" onclick="openModal('experience')" data-tilt data-tilt-scale="1.05">
+        <img src="https://raw.githubusercontent.com/0xreeko/network-icons/main/pc.svg" alt="Host 1" class="w-20 mx-auto" />
+        <p class="text-green-300 text-center mt-2 text-xl font-bold">Host 1<br><span class="text-sm font-medium">Experience</span></p>
+      </div>
+      <div class="device" onclick="openModal('contact')" data-tilt data-tilt-scale="1.05">
+        <img src="https://raw.githubusercontent.com/0xreeko/network-icons/main/laptop.svg" alt="Host 2" class="w-20 mx-auto" />
+        <p class="text-green-300 text-center mt-2 text-xl font-bold">Host 2<br><span class="text-sm font-medium">Contact</span></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="overlay" id="overlay" onclick="closeModal()"></div>
+  <div class="modal" id="modal">
+    <h2 class="text-xl font-bold mb-4" id="modalTitle"></h2>
+    <div id="modalContent"></div>
+  </div>
+
+  <script>
+    const data = {
+      about: {
+        title: "Router - About Me",
+        content: `> name: Asadujjaman Shoumik\n> role: Network Engineer\n> skills: Router/Switch config, VPNs, Cisco, MikroTik\n> goal: Apply networking skills in real-world environments.`
+      },
+      skills: {
+        title: "Switch - Skills",
+        content: `> skills:\n- Routing & Switching\n- MikroTik RouterOS\n- Cisco Packet Tracer\n- Network Security\n- Firewall Config\n> certs:\n- MTCNA, MTCRE, MTCSE\n- Cisco Network Security`
+      },
+      experience: {
+        title: "Host - Experience",
+        content: `> experience:\n- Built LAN/WAN networks\n- Configured MikroTik routers\n- Ran penetration testing labs`
+      },
+      contact: {
+        title: "Host - Contact",
+        content: `> location: Birampur, Dinajpur\n> email: shoumikshorker@gmail.com\n> linkedin: linkedin.com/in/0xas4d`
+      }
+    };
+
+    function openModal(key) {
+      document.getElementById('modalTitle').innerText = data[key].title;
+      document.getElementById('modalContent').innerText = data[key].content;
+      document.getElementById('overlay').style.display = 'block';
+      document.getElementById('modal').style.display = 'block';
+    }
+
+    function closeModal() {
+      document.getElementById('overlay').style.display = 'none';
+      document.getElementById('modal').style.display = 'none';
+    }
+
+    VanillaTilt.init(document.querySelectorAll(".device"));
+  </script>
+</body>
+</html>
